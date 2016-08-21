@@ -10,6 +10,40 @@
     android:gravity="center"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main" tools:context=".MainActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <LinearLayout
+            android:background="@color/green"
+            android:id="@+id/firstll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:gravity="center"
+                android:textSize="20sp"
+                android:id="@+id/first"
+                android:text="first Text"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:background="@color/yellow"
+            android:visibility="gone"
+            android:id="@+id/secondll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:gravity="center"
+                android:textSize="18sp"
+                android:id="@+id/second"
+                android:text="second Text"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+        </LinearLayout>
+    </LinearLayout>
     <RelativeLayout
         android:gravity="center"
         android:layout_weight="1"
