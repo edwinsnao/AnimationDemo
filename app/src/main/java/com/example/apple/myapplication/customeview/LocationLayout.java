@@ -49,7 +49,7 @@ public class LocationLayout extends RelativeLayout {
     private float afterRotation = 0f;
     float oldScaleX = 1f;
     float oldScaleY = 1f;
-    private rotateListener mRotateListener;
+//    private rotateListener mRotateListener;
     private Context mContext;
     /**
      * 保存设计区域所有的图案
@@ -219,11 +219,11 @@ public class LocationLayout extends RelativeLayout {
                     float endDis = distance(event);// 结束距离
                     rotation = (rotation(event) - oldRotation);
                     if (endDis > 10f) {
-//                        float scale = endDis / startDis;// 得到缩放倍数
-//                        scale(scale);
+                        float scale = endDis / startDis;// 得到缩放倍数
+                        scale(scale);
                         afterRotation = getRotation() + rotation;
                         setRotation(afterRotation);
-                        mRotateListener.rotate();
+//                        mRotateListener.rotate();
                     }
                 }
                 break;
@@ -290,13 +290,13 @@ public class LocationLayout extends RelativeLayout {
         }
     }
 
-    public interface rotateListener {
-        public void rotate();
-    }
-
-    public void setRotateListener(rotateListener mRotateListener) {
-        this.mRotateListener = mRotateListener;
-    }
+//    public interface rotateListener {
+//        public void rotate();
+//    }
+//
+//    public void setRotateListener(rotateListener mRotateListener) {
+//        this.mRotateListener = mRotateListener;
+//    }
 
     public void setCurrentRotation(float rotation) {
         this.afterRotation = rotation;
