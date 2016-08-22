@@ -1,5 +1,6 @@
 package com.example.apple.myapplication;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,8 +14,12 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.apple.myapplication.customeview.Circle;
+import com.example.apple.myapplication.customeview.LocationLayout;
+import com.example.apple.myapplication.customeview.TextAlign;
 import com.example.apple.myapplication.utils.AnimationUtils;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
@@ -27,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     View view3;
     View view4;
     View view5;
-    LinearLayout firstLL, secondLL;
+    LocationLayout location;
+    LinearLayout firstLL, secondLL,main;
     TextView tv, first, second;
     int i = 0;
     int h;
@@ -36,24 +42,38 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main1);
+        setContentView(R.layout.activity_main2);
         dm = getResources().getDisplayMetrics();
         h = (int) (50 * dm.density);
+        initLocation();
 
-        initView();
-        initListener();
+//        initView();
+//        initListener();
+//
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+    }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    private void initLocation() {
+        location = (LocationLayout) findViewById(R.id.location);
+        TextView tv = new TextView(this);
+        tv.setText("hello");
+        tv.setTextColor(Color.WHITE);
+        tv.setTextSize(50);
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.addRule(RelativeLayout.CENTER_IN_PARENT);
+        location.addView(tv,lp);
     }
 
     public void initListener() {
@@ -234,6 +254,11 @@ public class MainActivity extends AppCompatActivity {
         second = (TextView) findViewById(R.id.second);
         firstLL = (LinearLayout) findViewById(R.id.firstll);
         secondLL = (LinearLayout) findViewById(R.id.secondll);
+        main = (LinearLayout) findViewById(R.id.main);
+//        Circle circle = new Circle(this);
+        TextAlign text = new TextAlign(this);
+//        main.addView(circle);
+        main.addView(text);
     }
 
     public void setVisibility() {
