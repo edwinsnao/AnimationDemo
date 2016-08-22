@@ -51,14 +51,6 @@ public class LocationLayout extends RelativeLayout {
     float oldScaleY = 1f;
 //    private rotateListener mRotateListener;
     private Context mContext;
-    /**
-     * 保存设计区域所有的图案
-     */
-//    private List<DrawAttribute.DesignView> copyList;
-    /**
-     * 是否有视图被触摸
-     */
-    public static boolean hasTouchView = false;
 
     public LocationLayout(Context context) {
         super(context);
@@ -75,109 +67,6 @@ public class LocationLayout extends RelativeLayout {
 //        copyList = new ArrayList<>();
     }
 
-    /**
-     * 获取设计区域所有的设计图案
-     */
-
-//    public List<DrawAttribute.DesignView> getCopyDesignViews() {
-//        return copyList;
-//    }
-
-    /**
-     * 添加指定的设计图案View
-     */
-//    public void addDesignView(View view, ViewGroup.LayoutParams layoutParams) {
-//        this.list.add(view);
-////        ViewGroup parent = (ViewGroup) view.getView().getParent();
-////        if (parent != null) {
-////            parent.removeAllViews();
-////        }
-//        addView(view.getView(), layoutParams);
-//    }
-
-//    public void refreshView() {
-//        removeAllViews();
-//        Log.e("listSize", String.valueOf(list.size()));
-//        for (int i = 0; i < list.size(); i++) {
-//            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-//            addView(list.get(i).getView(), layoutParams);
-//        }
-//    }
-
-//    public void saveDesign(){
-//        for (int i = 0; i < copyList.size(); i++) {
-//            list.get(i).getView().setVisibility(GONE);
-//            copyList.get(i).getView().setVisibility(VISIBLE);
-//            copyList.get(i).getView().setX(list.get(i).getView().getX());
-//            copyList.get(i).getView().setY(list.get(i).getView().getY());
-//        }
-//    }
-
-//    public void getXY(){
-//        for (int i = 0; i < list.size(); i++) {
-//            copyList.get(i).getView().setX(list.get(i).getView().getX());
-//            copyList.get(i).getView().setY(list.get(i).getView().getY());
-//        }
-//    }
-
-
-    /**
-     * 添加指定的设计图案View
-     */
-//    public void addCopyDesignView(DrawAttribute.DesignView view, ViewGroup.LayoutParams layoutParams) {
-//        view.getView().setVisibility(GONE);
-//        this.copyList.add(view);
-////        ViewGroup parent = (ViewGroup) view.getView().getParent();
-////        if (parent != null) {
-////            parent.removeAllViews();
-////        }
-//        addView(view.getView(), layoutParams);
-//    }
-
-    /**
-     * 删除指定的设计图案View
-     */
-    public void delectViewIndex(int position) {
-        this.removeViewAt(position);
-        //allViews.notify();
-    }
-
-    /**
-     * 删除指定的设计图案View
-     */
-    public void addViewIndex(View v) {
-//        this.list.add(list.get(position));
-//        this.addView(list.get(position));
-//        this.addDesignView();
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        this.addView(v, layoutParams);
-        //allViews.notify();
-    }
-
-    /**
-     * 设计区域大小是否变化
-     * true：*；false：*。
-     */
-    private boolean sizeChange;
-
-    public void changeSize(boolean change) {
-        this.sizeChange = change;
-    }
-
-    /**
-     * 设置是否要裁剪
-     */
-    private boolean isOverlying = false;
-
-    public void setOverlying(boolean isOverlying) {
-        this.isOverlying = isOverlying;
-    }
-
-    /**
-     * 对设计区域的所有视图进行排序
-     */
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (!this.isEnabled()) {
@@ -188,10 +77,6 @@ public class LocationLayout extends RelativeLayout {
                 mode = MODE.DRAG;
                 lastX = (int) event.getRawX();
                 lastY = (int) event.getRawY();
-                if (LocationLayout.hasTouchView) {
-                    return super.onTouchEvent(event);
-                }
-                LocationLayout.hasTouchView = true;
                 break;
             case MotionEvent.ACTION_POINTER_DOWN:// 当屏幕上还有触点（手指），再有一个手指压下屏幕
                 mode = MODE.ZOOM;
@@ -230,7 +115,6 @@ public class LocationLayout extends RelativeLayout {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:// 有手指离开屏幕,但屏幕还有触点（手指）
                 mode = MODE.NONE;
-                LocationLayout.hasTouchView = false;
                 break;
         }
         return true;
