@@ -13,11 +13,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.apple.myapplication.customeview.Circle;
+import com.example.apple.myapplication.customeview.CustomTextView;
 import com.example.apple.myapplication.customeview.LocationLayout;
 import com.example.apple.myapplication.customeview.TextAlign;
 import com.example.apple.myapplication.utils.AnimationUtils;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     int i = 0;
     int h;
     DisplayMetrics dm;
+    CustomTextView test;
+    Button enable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +70,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initLocation() {
+        enable = (Button) findViewById(R.id.enable);
+        enable.setBackgroundColor(Color.WHITE);
+        enable.setTextColor(Color.BLACK);
+        enable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                location.setEnabled(false);
+            }
+        });
         location = (LocationLayout) findViewById(R.id.location);
-        TextView tv = new TextView(this);
-        tv.setText("hello");
-        tv.setTextColor(Color.WHITE);
-        tv.setTextSize(50);
+        test = new CustomTextView(this);
+        test.setText("hello");
+        test.setEnabled(false);
+        test.setTextColor(Color.WHITE);
+        test.setTextSize(50);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.addRule(RelativeLayout.CENTER_IN_PARENT);
-        location.addView(tv,lp);
+        location.addView(test, lp);
     }
 
     public void initListener() {
@@ -281,6 +295,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            test.setEnabled(true);
             return true;
         }
 
