@@ -32,6 +32,7 @@ import java.util.List;
  */
 public class LocationLayout extends RelativeLayout {
     private float oldRotation = 0;
+    private boolean isLayout;
 
     private enum MODE {
         NONE, DRAG, ZOOM
@@ -75,6 +76,7 @@ public class LocationLayout extends RelativeLayout {
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
                 mode = MODE.DRAG;
+                isLayout = false;
                 lastX = (int) event.getRawX();
                 lastY = (int) event.getRawY();
                 break;
@@ -93,6 +95,7 @@ public class LocationLayout extends RelativeLayout {
                     int right = getRight() + dx;
                     int bottom = getBottom() + dy;
                     layout(left, top, right, bottom);
+                    isLayout = true;
                     this.left = left;
                     this.top = top;
                     this.right = right;
@@ -137,7 +140,9 @@ public class LocationLayout extends RelativeLayout {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
-        if(changed && left!=0 && right !=0 && top !=0 && bottom!=0) {
+//        super.onLayout(changed, left, top, right, bottom);
+        if(isLayout) {
+            isLayout = false;
             layout(left, top, right, bottom);
         }
         Log.e("left1",String.valueOf(left));
