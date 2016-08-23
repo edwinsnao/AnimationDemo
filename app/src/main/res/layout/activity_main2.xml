@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <Button
@@ -7,13 +7,13 @@
         android:textSize="20sp"
         android:text="enable"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
 <com.example.apple.myapplication.customeview.LocationLayout
     android:id="@+id/location"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:background="@color/colorPrimary"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 </com.example.apple.myapplication.customeview.LocationLayout>
-</LinearLayout>

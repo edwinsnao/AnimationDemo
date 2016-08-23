@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tv, first, second;
     int i = 0;
     int h;
+    int tmp = 0;
     DisplayMetrics dm;
     CustomTextView test;
     Button enable;
@@ -70,24 +71,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initLocation() {
-        enable = (Button) findViewById(R.id.enable);
-        enable.setBackgroundColor(Color.WHITE);
-        enable.setTextColor(Color.BLACK);
-        enable.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                location.setEnabled(false);
-            }
-        });
+//        enable = (Button) findViewById(R.id.enable);
+//        enable.setBackgroundColor(Color.WHITE);
+//        enable.setTextColor(Color.BLACK);
+//        enable.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                location.setEnabled(false);
+//            }
+//        });
         location = (LocationLayout) findViewById(R.id.location);
         test = new CustomTextView(this);
+        test.setId(1);
         test.setText("hello");
         test.setEnabled(false);
         test.setTextColor(Color.WHITE);
         test.setTextSize(50);
+        enable = new Button(this);
+        enable.setBackgroundColor(Color.WHITE);
+        enable.setTextColor(Color.BLACK);
+        /**
+        * 发现了原来是visibility导致locationLayout重绘了,丢失之前的位置了
+        * */
+        enable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (++tmp % 2 == 1) {
+                    test.setVisibility(View.GONE);
+                } else {
+                    test.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.addRule(RelativeLayout.CENTER_IN_PARENT);
+        RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp1.addRule(RelativeLayout.BELOW,1);
+        lp1.addRule(RelativeLayout.CENTER_IN_PARENT);
         location.addView(test, lp);
+        location.addView(enable, lp1);
     }
 
     public void initListener() {
