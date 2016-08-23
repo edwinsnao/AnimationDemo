@@ -97,6 +97,10 @@ public class LocationLayout extends RelativeLayout {
                     this.top = top;
                     this.right = right;
                     this.bottom = bottom;
+                    Log.e("left",String.valueOf(left));
+                    Log.e("right",String.valueOf(right));
+                    Log.e("top",String.valueOf(top));
+                    Log.e("bottom",String.valueOf(bottom));
 //
                     lastX = (int) event.getRawX();
                     lastY = (int) event.getRawY();
@@ -133,6 +137,14 @@ public class LocationLayout extends RelativeLayout {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
+        if(changed && left!=0 && right !=0 && top !=0 && bottom!=0) {
+            layout(left, top, right, bottom);
+        }
+        Log.e("left1",String.valueOf(left));
+        Log.e("right1",String.valueOf(right));
+        Log.e("top1",String.valueOf(top));
+        Log.e("bottom1", String.valueOf(bottom));
+        Log.e("ischanged", String.valueOf(changed));
     }
 
     public void scale(float scaleFactor) {

@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
     View view5;
     LocationLayout location;
     LinearLayout firstLL, secondLL,main;
-    TextView tv, first, second;
+    TextView tv, first, second,demo;
     int i = 0;
     int h;
     int tmp = 0;
     DisplayMetrics dm;
     CustomTextView test;
-    Button enable;
+    Button enable,enable1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,15 +71,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initLocation() {
-//        enable = (Button) findViewById(R.id.enable);
-//        enable.setBackgroundColor(Color.WHITE);
-//        enable.setTextColor(Color.BLACK);
-//        enable.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                location.setEnabled(false);
-//            }
-//        });
+        demo = (TextView) findViewById(R.id.demo);
+        enable1 = (Button) findViewById(R.id.enable);
+        enable1.setBackgroundColor(Color.WHITE);
+        enable1.setTextColor(Color.BLACK);
+        enable1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (++tmp % 2 == 1) {
+                    demo.setVisibility(View.GONE);
+                } else {
+                    demo.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         location = (LocationLayout) findViewById(R.id.location);
         test = new CustomTextView(this);
         test.setId(1);
@@ -88,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         test.setTextColor(Color.WHITE);
         test.setTextSize(50);
         enable = new Button(this);
+        enable.setText("visibility");
         enable.setBackgroundColor(Color.WHITE);
         enable.setTextColor(Color.BLACK);
         /**
