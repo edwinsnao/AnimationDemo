@@ -1,8 +1,11 @@
 package com.example.apple.myapplication.customeview;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v4.widget.ViewDragHelper;
+import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,21 +20,29 @@ import com.nineoldandroids.animation.ValueAnimator;
  * Created by fazhao on 16/8/22.
  */
 public class CustomTextView extends TextView {
+    private DisplayMetrics dm;
+    private Context context;
+    private int screenH;
+    private int screenW;
+    private int centerX;
+    private int centerY;
+    private TextPaint mTextPaint;
+
     private ViewDragHelper mDragHelper;
 
     public CustomTextView(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
     public CustomTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
     public CustomTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(context);
     }
 
     private float size;
@@ -153,7 +164,12 @@ public class CustomTextView extends TextView {
     float lastX, lastY;
 
 
-    private void init() {
+    private void init(Context context) {
+        this.context = context;
+        dm = context.getResources().getDisplayMetrics();
+        screenH = dm.heightPixels;
+        screenW = dm.widthPixels;
+        mTextPaint = getPaint();
         setLayerType(View.LAYER_TYPE_HARDWARE, null);
 //        mDragHelper = ViewDragHelper.create((ViewGroup) getRootView().getParent(), 1.0f, new ViewDragHelper.Callback() {
 //            @Override
@@ -178,6 +194,12 @@ public class CustomTextView extends TextView {
 //    public void setOnImgTouchListener(ImgTouchListener textTouchListener) {
 //        this.textTouchListener = textTouchListener;
 //    }
+    public int getFontHeight(float fontSize) {
+        Paint paint = new Paint();
+        paint.setTextSize(fontSize);
+        Paint.FontMetrics fm = paint.getFontMetrics();
+        return (int) Math.ceil(fm.descent - fm.top) + 2;
+    }
 
     ImgClickListener imgClickListener;
 
@@ -229,13 +251,30 @@ public class CustomTextView extends TextView {
                     float top = getTop() + dy;
                     float right = getRight() + dx;
                     float bottom = getBottom() + dy;
-                    layout((int) left, (int) top, (int) right, (int) bottom);
-                    Log.e("o-l-t-r-b", left + "-" + top + "-" + right + "-" + bottom);
-                    this.left = (int) left;
-                    this.top = (int) top;
-                    this.right = (int) right;
-                    this.bottom = (int) bottom;
-
+//                    if(right - mTextPaint.measureText(getText().toString())<0 || left > screenW - 0|| bottom < 0||top - getFontHeight(getTextSize())> screenH) {
+                    if(left < 0 || right > screenW || top < 0 || bottom >screenH) {
+                        Log.e("enter", "enter");
+                        centerX = (int) ((screenW) / 2);
+                        centerY = (int) ((screenH) / 2);
+                        left = centerX - (int) mTextPaint.measureText(getText().toString()) / 2;
+                        right = centerX + (int) mTextPaint.measureText(getText().toString()) / 2;
+                        top = centerY - getFontHeight(getTextSize()) / 2;
+                        bottom = centerY + getFontHeight(getTextSize()) / 2;
+//                         java.lang.IllegalStateException: Unable to create layer for CustomTextView
+                        layout((int) left, (int) top
+                                , (int) right, (int) bottom);
+                        this.left = (int) left;
+                        this.top = (int) top;
+                        this.right = (int) right;
+                        this.bottom = (int) bottom;
+                    } else {
+                        layout((int) left, (int) top, (int) right, (int) bottom);
+                        Log.e("o-l-t-r-b", left + "-" + top + "-" + right + "-" + bottom);
+                        this.left = (int) left;
+                        this.top = (int) top;
+                        this.right = (int) right;
+                        this.bottom = (int) bottom;
+                    }
 //
                     lastX = event.getRawX();
                     lastY = event.getRawY();
