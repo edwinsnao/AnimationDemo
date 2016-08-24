@@ -2,15 +2,13 @@ package com.example.apple.myapplication;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
@@ -18,8 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.apple.myapplication.customeview.Circle;
 import com.example.apple.myapplication.customeview.CustomTextView;
+import com.example.apple.myapplication.customeview.LargeImageView;
 import com.example.apple.myapplication.customeview.LocationLayout;
 import com.example.apple.myapplication.customeview.TextAlign;
 import com.example.apple.myapplication.utils.AnimationUtils;
@@ -27,6 +25,12 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
     View view1;
@@ -49,11 +53,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
 //        setContentView(R.layout.activity_main1);
-        setContentView(R.layout.activity_main2);
+//        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main4);
 //        setContentView(R.layout.activity_main3);
         dm = getResources().getDisplayMetrics();
         h = (int) (50 * dm.density);
-        initLocation();
+        LargeImageView img = (LargeImageView) findViewById(R.id.img);
+        String path = "/sdcard/100385.png";
+        File file = new File(path);
+//        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+"100385.png");
+        InputStream is = null;
+        try {
+            is = new FileInputStream(file);
+            img.setInputStream(is);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+//        finally {
+//            try {
+//                is.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        initLocation();
 
 //        initView();
 //        initListener();
