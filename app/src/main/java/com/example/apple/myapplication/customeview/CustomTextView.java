@@ -162,7 +162,7 @@ public class CustomTextView extends TextView {
     MODE mode;
 
     float lastX, lastY;
-
+    float startX,startY;
 
     private void init(Context context) {
         this.context = context;
@@ -224,6 +224,8 @@ public class CustomTextView extends TextView {
                 isZoom = false;
                 lastX = event.getRawX();
                 lastY = event.getRawY();
+                startX = event.getRawX();
+                startY = event.getRawY();
 //                if (imgClickListener!=null){
 //                    imgClickListener.onImgClickShowed(viewId,true);
 //                }
@@ -254,13 +256,31 @@ public class CustomTextView extends TextView {
 //                    if(right - mTextPaint.measureText(getText().toString())<0 || left > screenW - 0|| bottom < 0||top - getFontHeight(getTextSize())> screenH) {
                     if(left < 0 || right > screenW || top < 0 || bottom >screenH) {
                         Log.e("enter", "enter");
-                        centerX = (int) ((screenW) / 2);
-                        centerY = (int) ((screenH) / 2);
+                        /**
+                        * move to the center of screen
+                        * */
+//                        centerX = (int) ((screenW) / 2);
+//                        centerY = (int) ((screenH) / 2);
+//                        left = centerX - (int) mTextPaint.measureText(getText().toString()) / 2;
+//                        right = centerX + (int) mTextPaint.measureText(getText().toString()) / 2;
+//                        top = centerY - getFontHeight(getTextSize()) / 2;
+//                        bottom = centerY + getFontHeight(getTextSize()) / 2;
+////                         java.lang.IllegalStateException: Unable to create layer for CustomTextView
+//                        layout((int) left, (int) top
+//                                , (int) right, (int) bottom);
+
+
+                        /**
+                        * move to the last position
+                        * */
+                        centerX = (int) Math.ceil(startX);
+                        centerY = (int) Math.ceil(startY);
                         left = centerX - (int) mTextPaint.measureText(getText().toString()) / 2;
                         right = centerX + (int) mTextPaint.measureText(getText().toString()) / 2;
                         top = centerY - getFontHeight(getTextSize()) / 2;
                         bottom = centerY + getFontHeight(getTextSize()) / 2;
-//                         java.lang.IllegalStateException: Unable to create layer for CustomTextView
+                        Log.e("cX-xY",centerX+"-"+centerY);
+                        Log.e("o-l-t-r-b", left + "-" + top + "-" + right + "-" + bottom);
                         layout((int) left, (int) top
                                 , (int) right, (int) bottom);
                         this.left = (int) left;
