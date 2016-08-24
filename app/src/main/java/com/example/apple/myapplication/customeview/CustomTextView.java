@@ -1,10 +1,13 @@
 package com.example.apple.myapplication.customeview;
 
 import android.content.Context;
+import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.TextView;
 
 import com.nineoldandroids.animation.Animator;
@@ -14,6 +17,8 @@ import com.nineoldandroids.animation.ValueAnimator;
  * Created by fazhao on 16/8/22.
  */
 public class CustomTextView extends TextView {
+    private ViewDragHelper mDragHelper;
+
     public CustomTextView(Context context) {
         super(context);
         init();
@@ -150,6 +155,13 @@ public class CustomTextView extends TextView {
 
     private void init() {
         setLayerType(View.LAYER_TYPE_HARDWARE, null);
+//        mDragHelper = ViewDragHelper.create((ViewGroup) getRootView().getParent(), 1.0f, new ViewDragHelper.Callback() {
+//            @Override
+//            public boolean tryCaptureView(View child, int pointerId) {
+//                Log.e("customeTv",String.valueOf(child));
+//                return true;
+//            }
+//        });
     }
 
     /**
@@ -258,6 +270,7 @@ public class CustomTextView extends TextView {
 
                 break;
         }
+//        mDragHelper.processTouchEvent(event);
         return true;
     }
 

@@ -31,5 +31,12 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
         android:clipChildren="false"
-        android:clipToPadding="false"></com.example.apple.myapplication.customeview.LocationLayout>
+        android:clipToPadding="false">
+        <TextView
+            android:gravity="center"
+            android:textSize="100sp"
+            android:text="test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.example.apple.myapplication.customeview.LocationLayout>
 </RelativeLayout>

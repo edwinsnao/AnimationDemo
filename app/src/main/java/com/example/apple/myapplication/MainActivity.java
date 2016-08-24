@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     View view5;
     LocationLayout location;
     LinearLayout firstLL, secondLL,main;
-    TextView tv, first, second,demo;
+    TextView tv, first, second,demo,tmpTv;
     int i = 0;
     int h;
     int tmp = 0;
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 //        setContentView(R.layout.activity_main);
 //        setContentView(R.layout.activity_main1);
         setContentView(R.layout.activity_main2);
+//        setContentView(R.layout.activity_main3);
         dm = getResources().getDisplayMetrics();
         h = (int) (50 * dm.density);
         initLocation();
@@ -86,13 +87,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         location = (LocationLayout) findViewById(R.id.location);
+        for (int i = 0; i < location.getChildCount(); i++) {
+
+            Log.e("child", String.valueOf(location.getChildAt(i)));
+        }
         test = new CustomTextView(this);
         test.setId(1);
         test.setText("hello");
-        test.setEnabled(false);
+        test.setEnabled(true);
         test.setTextColor(Color.WHITE);
         test.setTextSize(50);
+        Log.e("test", String.valueOf(test.getRootView()));
+        /**
+        * 返回viewParent null
+        * */
+//        Log.e("test",String.valueOf(test.getParent()));
+//        Log.e("test",String.valueOf(tmpTv.getRootView()));
+//        Log.e("test",String.valueOf(tmpTv.getParent()));
+        tmpTv = new TextView(this);
+        tmpTv.setText("tmp");
+        tmpTv.setEnabled(true);
+        tmpTv.setTextColor(Color.WHITE);
+        tmpTv.setTextSize(50);
         enable = new Button(this);
+        enable.setId(2);
         enable.setText("visibility");
         enable.setBackgroundColor(Color.WHITE);
         enable.setTextColor(Color.BLACK);
@@ -114,8 +132,16 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp1.addRule(RelativeLayout.BELOW,1);
         lp1.addRule(RelativeLayout.CENTER_IN_PARENT);
+        RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp2.addRule(RelativeLayout.BELOW,2);
+        lp2.addRule(RelativeLayout.CENTER_IN_PARENT);
         location.addView(test, lp);
         location.addView(enable, lp1);
+        location.addView(tmpTv, lp2);
+        for (int i = 0; i < location.getChildCount(); i++) {
+
+            Log.e("child", String.valueOf(location.getChildAt(i)));
+        }
     }
 
     public void initListener() {

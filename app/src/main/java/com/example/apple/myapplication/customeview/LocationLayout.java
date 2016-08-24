@@ -5,7 +5,9 @@ package com.example.apple.myapplication.customeview;
  */
 
 import android.content.Context;
+import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,12 +35,20 @@ import java.util.List;
 public class LocationLayout extends RelativeLayout {
     private float oldRotation = 0;
     private boolean isLayout;
+    private ViewDragHelper mDragHelper;
 
     private enum MODE {
         NONE, DRAG, ZOOM
 
     }
-
+    int screenW;
+    int screenH;
+    private View edge;
+    private int edgeL;
+    private int edgeT;
+    private int edgeR;
+    private int edgeB;
+    private int edgeC;
     public int left = 0;
     public int top = 0;
     public int right = 0;
@@ -63,67 +73,139 @@ public class LocationLayout extends RelativeLayout {
         init(context);
     }
 
+
+
     private void init(Context context) {
         this.mContext = context;
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        screenH = dm.heightPixels;
+        screenW = dm.widthPixels;
+        mDragHelper = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback() {
+            @Override
+            public boolean tryCaptureView(View child, int pointerId) {
+                Log.e("viewDrager",String.valueOf(child));
+                Log.e("testcap","test");
+                return true;
+            }
+
+            @Override
+            public int clampViewPositionHorizontal(View child, int left, int dx) {
+                return left;
+            }
+
+            @Override
+            public int clampViewPositionVertical(View child, int top, int dy) {
+                return top;
+            }
+
+//            @Override
+//            public void onEdgeTouched(int edgeFlags, int pointerId) {
+//                super.onEdgeTouched(edgeFlags, pointerId);
+//                Log.e("edgeTouch",String.valueOf(edgeFlags));
+//            }
+
+
+            @Override
+            public void onViewReleased(View releasedChild, float xvel, float yvel) {
+//                super.onViewReleased(releasedChild, xvel, yvel);
+                if(releasedChild.getLeft()<0 || releasedChild.getRight()> screenW
+                        || releasedChild.getTop() < 0 || releasedChild.getBottom() > screenH) {
+                    releasedChild.setLeft(screenW / 2);
+                    releasedChild.setTop(screenH / 2);
+                    releasedChild.requestLayout();
+                    releasedChild.invalidate();
+                }
+            }
+
+            @Override
+            public void onEdgeDragStarted(int edgeFlags, int pointerId) {
+//                super.onEdgeDragStarted(edgeFlags, pointerId);
+                Log.e("edgeStart",String.valueOf(edgeFlags));
+                int captureId = 0;
+                for (int i = 0; i < getChildCount(); i++) {
+                    mDragHelper.captureChildView(getChildAt(i), pointerId);
+                    Log.e("child", String.valueOf(getChildAt(i)));
+                }
+                Log.e("edge",String.valueOf(getChildAt(pointerId)));
+                Log.e("edge",String.valueOf(pointerId));
+                edge = getChildAt(captureId);
+                edgeL = edge.getLeft();
+                edgeT = edge.getTop();
+                edgeR = edge.getRight();
+                edgeB = edge.getBottom();
+                edgeC = (edgeL + edgeR) / 2;
+                edge.layout(edgeL - edgeC,edgeT,edgeR -edgeC,edgeB);
+            }
+        });
+        mDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_ALL);
 //        copyList = new ArrayList<>();
+    }
+
+
+    @Override
+    public void computeScroll() {
+//        super.computeScroll();
+        if(mDragHelper.continueSettling(true))
+            invalidate();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (!this.isEnabled()) {
-            return true;
-        }
-        switch (event.getAction() & MotionEvent.ACTION_MASK) {
-            case MotionEvent.ACTION_DOWN:
-                mode = MODE.DRAG;
-                isLayout = false;
-                lastX = (int) event.getRawX();
-                lastY = (int) event.getRawY();
-                break;
-            case MotionEvent.ACTION_POINTER_DOWN:// 当屏幕上还有触点（手指），再有一个手指压下屏幕
-                mode = MODE.ZOOM;
-                oldRotation = rotation(event);
-                startDis = distance(event);
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-                if (mode == MODE.DRAG) {
-                    int dx = (int) event.getRawX() - lastX;
-                    int dy = (int) event.getRawY() - lastY;
-                    int left = getLeft() + dx;
-                    int top = getTop() + dy;
-                    int right = getRight() + dx;
-                    int bottom = getBottom() + dy;
-                    layout(left, top, right, bottom);
-                    isLayout = true;
-                    this.left = left;
-                    this.top = top;
-                    this.right = right;
-                    this.bottom = bottom;
-                    Log.e("left",String.valueOf(left));
-                    Log.e("right",String.valueOf(right));
-                    Log.e("top",String.valueOf(top));
-                    Log.e("bottom",String.valueOf(bottom));
+//        if (!this.isEnabled()) {
+//            return true;
+//        }
+//        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+//            case MotionEvent.ACTION_DOWN:
+//                mode = MODE.DRAG;
+//                isLayout = false;
+//                lastX = (int) event.getRawX();
+//                lastY = (int) event.getRawY();
+//                break;
+//            case MotionEvent.ACTION_POINTER_DOWN:// 当屏幕上还有触点（手指），再有一个手指压下屏幕
+//                mode = MODE.ZOOM;
+//                oldRotation = rotation(event);
+//                startDis = distance(event);
+//                break;
 //
-                    lastX = (int) event.getRawX();
-                    lastY = (int) event.getRawY();
-                } else if (mode == MODE.ZOOM) {
-                    float endDis = distance(event);// 结束距离
-                    rotation = (rotation(event) - oldRotation);
-                    if (endDis > 10f) {
-                        float scale = endDis / startDis;// 得到缩放倍数
-                        scale(scale);
-                        afterRotation = getRotation() + rotation;
-                        setRotation(afterRotation);
-//                        mRotateListener.rotate();
-                    }
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_POINTER_UP:// 有手指离开屏幕,但屏幕还有触点（手指）
-                mode = MODE.NONE;
-                break;
-        }
+//            case MotionEvent.ACTION_MOVE:
+//                if (mode == MODE.DRAG) {
+//                    int dx = (int) event.getRawX() - lastX;
+//                    int dy = (int) event.getRawY() - lastY;
+//                    int left = getLeft() + dx;
+//                    int top = getTop() + dy;
+//                    int right = getRight() + dx;
+//                    int bottom = getBottom() + dy;
+//                    layout(left, top, right, bottom);
+//                    isLayout = true;
+//                    this.left = left;
+//                    this.top = top;
+//                    this.right = right;
+//                    this.bottom = bottom;
+//                    Log.e("left",String.valueOf(left));
+//                    Log.e("right",String.valueOf(right));
+//                    Log.e("top",String.valueOf(top));
+//                    Log.e("bottom",String.valueOf(bottom));
+////
+//                    lastX = (int) event.getRawX();
+//                    lastY = (int) event.getRawY();
+//                } else if (mode == MODE.ZOOM) {
+//                    float endDis = distance(event);// 结束距离
+//                    rotation = (rotation(event) - oldRotation);
+//                    if (endDis > 10f) {
+//                        float scale = endDis / startDis;// 得到缩放倍数
+//                        scale(scale);
+//                        afterRotation = getRotation() + rotation;
+//                        setRotation(afterRotation);
+////                        mRotateListener.rotate();
+//                    }
+//                }
+//                break;
+//            case MotionEvent.ACTION_UP:
+//            case MotionEvent.ACTION_POINTER_UP:// 有手指离开屏幕,但屏幕还有触点（手指）
+//                mode = MODE.NONE;
+//                break;
+//        }
+        mDragHelper.processTouchEvent(event);
         return true;
     }
 
@@ -141,15 +223,15 @@ public class LocationLayout extends RelativeLayout {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
 //        super.onLayout(changed, left, top, right, bottom);
-        if(isLayout) {
-            isLayout = false;
-            layout(left, top, right, bottom);
-        }
-        Log.e("left1",String.valueOf(left));
-        Log.e("right1",String.valueOf(right));
-        Log.e("top1",String.valueOf(top));
-        Log.e("bottom1", String.valueOf(bottom));
-        Log.e("ischanged", String.valueOf(changed));
+//        if(isLayout) {
+//            isLayout = false;
+//            layout(left, top, right, bottom);
+//        }
+//        Log.e("left1",String.valueOf(left));
+//        Log.e("right1",String.valueOf(right));
+//        Log.e("top1",String.valueOf(top));
+//        Log.e("bottom1", String.valueOf(bottom));
+//        Log.e("ischanged", String.valueOf(changed));
     }
 
     public void scale(float scaleFactor) {
@@ -217,6 +299,7 @@ public class LocationLayout extends RelativeLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return super.onInterceptTouchEvent(ev);
+//        return super.onInterceptTouchEvent(ev);
+        return mDragHelper.shouldInterceptTouchEvent(ev);
     }
 }
