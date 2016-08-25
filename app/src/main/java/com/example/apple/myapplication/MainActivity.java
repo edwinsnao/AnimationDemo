@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.apple.myapplication.customeview.CustomTextView;
 import com.example.apple.myapplication.customeview.LargeImageView;
 import com.example.apple.myapplication.customeview.LocationLayout;
+import com.example.apple.myapplication.customeview.MyTextView;
 import com.example.apple.myapplication.customeview.TextAlign;
 import com.example.apple.myapplication.utils.AnimationUtils;
 import com.nineoldandroids.animation.Animator;
@@ -53,22 +54,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
 //        setContentView(R.layout.activity_main1);
-//        setContentView(R.layout.activity_main2);
-        setContentView(R.layout.activity_main4);
+        setContentView(R.layout.activity_main2);
+//        setContentView(R.layout.activity_main4);
 //        setContentView(R.layout.activity_main3);
         dm = getResources().getDisplayMetrics();
         h = (int) (50 * dm.density);
-        LargeImageView img = (LargeImageView) findViewById(R.id.img);
-        String path = "/sdcard/100385.png";
-        File file = new File(path);
-//        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+"100385.png");
-        InputStream is = null;
-        try {
-            is = new FileInputStream(file);
-            img.setInputStream(is);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+//        LargeImageView img = (LargeImageView) findViewById(R.id.img);
+//        String path = "/sdcard/100385.png";
+//        File file = new File(path);
+////        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+"100385.png");
+//        InputStream is = null;
+//        try {
+//            is = new FileInputStream(file);
+//            img.setInputStream(is);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
 //        finally {
 //            try {
 //                is.close();
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 //                e.printStackTrace();
 //            }
 //        }
-//        initLocation();
+        initLocation();
 
 //        initView();
 //        initListener();
@@ -114,6 +115,10 @@ public class MainActivity extends AppCompatActivity {
 
             Log.e("child", String.valueOf(location.getChildAt(i)));
         }
+        MyTextView my = new MyTextView(this);
+        my.setText("MyTextView");
+        my.setTextSize(50);
+        my.setTextColor(Color.WHITE);
         test = new CustomTextView(this);
         test.setId(1);
         test.setText("hello");
@@ -129,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
 //        Log.e("test",String.valueOf(tmpTv.getParent()));
         tmpTv = new TextView(this);
         tmpTv.setText("tmp");
+        tmpTv.setId(3);
         tmpTv.setEnabled(true);
         tmpTv.setTextColor(Color.WHITE);
         tmpTv.setTextSize(50);
@@ -158,9 +164,13 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp2.addRule(RelativeLayout.BELOW,2);
         lp2.addRule(RelativeLayout.CENTER_IN_PARENT);
+        RelativeLayout.LayoutParams lp3 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp2.addRule(RelativeLayout.BELOW,3);
+        lp2.addRule(RelativeLayout.CENTER_IN_PARENT);
         location.addView(test, lp);
         location.addView(enable, lp1);
         location.addView(tmpTv, lp2);
+        location.addView(my, lp3);
         for (int i = 0; i < location.getChildCount(); i++) {
 
             Log.e("child", String.valueOf(location.getChildAt(i)));
