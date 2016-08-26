@@ -28,17 +28,22 @@ public class MyTextView extends TextView {
 
     public MyTextView(Context context) {
         super(context);
-        this.context = context;
+        init(context);
     }
 
     public MyTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
+        init(context);
     }
 
     public MyTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(context);
+    }
+
+    private void init(Context context) {
         this.context = context;
+        setLayerType(LAYER_TYPE_SOFTWARE, null);
     }
 
     @Override
@@ -93,22 +98,6 @@ public class MyTextView extends TextView {
                 Log.e("up", "up");
                 break;
         }
-//                        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-//                            downX = motionEvent.getX();
-//                            downY = motionEvent.getY();
-//                        }
-//                        if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-//                            MoveX = motionEvent.getX();
-//                            MoveY = motionEvent.getY();
-//                            Log.e("math",String.valueOf(Math.abs(MoveX - downX)));
-//                            if (Math.abs(MoveX - downX) < 12) {
-//                                return false;// 距离较小，当作click事件来处理
-//                            }
-//                            else{
-//                                tv.setText("move");
-//                                return true;
-//                            }
-//                        }
         Log.e("what", "what");
         return true;
     }
