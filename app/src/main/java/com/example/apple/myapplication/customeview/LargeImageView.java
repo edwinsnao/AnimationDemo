@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
@@ -22,6 +23,13 @@ public class LargeImageView extends View {
 
     static{
         options.inPreferredConfig = Bitmap.Config.RGB_565;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        Bitmap bm = mDecoder.decodeRegion(mRect,options);
+        canvas.drawBitmap(bm,0,0,null);
     }
 
     public void setInputStream(InputStream is ){
