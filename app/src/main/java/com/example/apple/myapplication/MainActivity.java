@@ -20,6 +20,7 @@ import com.example.apple.myapplication.customeview.CustomTextView;
 import com.example.apple.myapplication.customeview.LargeImageView;
 import com.example.apple.myapplication.customeview.LocationLayout;
 import com.example.apple.myapplication.customeview.MyTextView;
+import com.example.apple.myapplication.customeview.OperationView;
 import com.example.apple.myapplication.customeview.TextAlign;
 import com.example.apple.myapplication.utils.AnimationUtils;
 import com.nineoldandroids.animation.Animator;
@@ -54,9 +55,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
 //        setContentView(R.layout.activity_main1);
-        setContentView(R.layout.activity_main2);
+//        setContentView(R.layout.activity_main2);
 //        setContentView(R.layout.activity_main4);
 //        setContentView(R.layout.activity_main3);
+        setContentView(R.layout.activity_main5);
         dm = getResources().getDisplayMetrics();
         h = (int) (50 * dm.density);
 //        LargeImageView img = (LargeImageView) findViewById(R.id.img);
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 //                e.printStackTrace();
 //            }
 //        }
-        initLocation();
+//        initLocation();
 
 //        initView();
 //        initListener();
@@ -93,6 +95,18 @@ public class MainActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
+        initOperateView();
+
+    }
+
+    private void initOperateView() {
+        final OperationView operationView = new OperationView(this);
+        operationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                operationView.scale();
+            }
+        });
     }
 
     private void initLocation() {
