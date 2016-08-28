@@ -5,8 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.apple.myapplication.MainActivity;
 import com.example.apple.myapplication.R;
 
 /**
@@ -30,6 +32,23 @@ public class OperationView extends View {
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent event) {
+//        return super.onTouchEvent(event);
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                MainActivity.xy.setText(""+event.getRawX()+","+event.getRawY());
+                break;
+            case MotionEvent.ACTION_MOVE:
+                MainActivity.xy.setText(""+event.getRawX()+","+event.getRawY());
+                break;
+            case MotionEvent.ACTION_UP:
+                MainActivity.xy.setText(""+event.getRawX()+","+event.getRawY());
+                break;
+        }
+        return true;
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         float x = this.getX();
@@ -38,10 +57,13 @@ public class OperationView extends View {
         int h = this.getHeight();
         Log.e("x",String.valueOf(x));
         Log.e("y", String.valueOf(y));
+        Log.e("x+w/2",String.valueOf(x+w/2));
+        Log.e("y+h/2",String.valueOf(y+h/2));
         Paint paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(context.getResources().getColor(R.color.colorPrimary));
+        paint.setColor(getResources().getColor(R.color.colorPrimary));
         canvas.drawText("click to scale",x + w / 2,y + h / 2,paint);
+        canvas.drawColor(getResources().getColor(R.color.colorPrimary));
 //        Rect rect = new Rect();
     }
 

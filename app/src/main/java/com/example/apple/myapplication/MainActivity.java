@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     DisplayMetrics dm;
     CustomTextView test;
     Button enable,enable1;
+    public static TextView xy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initOperateView() {
+        xy = (TextView) findViewById(R.id.xy);
         final OperationView operationView = new OperationView(this);
         operationView.setOnClickListener(new View.OnClickListener() {
             @Override
