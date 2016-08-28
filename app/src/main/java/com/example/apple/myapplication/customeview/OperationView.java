@@ -66,7 +66,7 @@ public class OperationView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         /**
-         * the canvas drawColor before onDraw will not cover the text!
+         * the canvas drawColor before onDraw will not cover the text!(not cover now)
          * */
         canvas.drawColor(getResources().getColor(R.color.colorPrimary));
         super.onDraw(canvas);
@@ -81,7 +81,7 @@ public class OperationView extends View {
         Paint paint = new Paint();
         Rect rect = new Rect();
         paint.setTextAlign(Paint.Align.LEFT);
-        paint.setColor(getResources().getColor(R.color.white));
+//        paint.setColor(getResources().getColor(R.color.white));
         paint.getTextBounds("click to scale", 0 , "click to scale".length(), rect);
         paint.setAntiAlias(true);
 //        paint.setColor(getResources().getColor(R.color.colorPrimary));
@@ -105,9 +105,24 @@ public class OperationView extends View {
 //        canvas.drawText("click to scale",0,getFontHeight(null),paint);
         /**
          * default color is black
-         * display2: can display in center
+         * display2: can display in center(not strict)
          * */
-        canvas.drawText("click to scale",(getMeasuredWidth() - rect.width()) / 2,(getMeasuredHeight() + rect.height()) / 2,paint);
+//        canvas.drawText("click to scale",(getMeasuredWidth() - rect.width()) / 2,(getMeasuredHeight() + rect.height()) / 2,paint);
+
+        /**
+         * default color is black
+         * display2: can display in center correctly
+         * */
+//        Paint.FontMetricsInt metricsInt = paint.getFontMetricsInt();
+//        canvas.drawText("click to scale",(getMeasuredWidth() - rect.width()) / 2,(getMeasuredHeight() - metricsInt.bottom - metricsInt.top) / 2,paint);
+
+        /**
+         * default color is black
+         * display2: can display in center correctly
+         * the same as above?
+         * */
+        Paint.FontMetrics metricsInt = paint.getFontMetrics();
+        canvas.drawText("click to scale",(getMeasuredWidth() - rect.width()) / 2,(getMeasuredHeight() - metricsInt.descent - metricsInt.ascent) / 2,paint);
 //        Rect rect = new Rect();
     }
 
