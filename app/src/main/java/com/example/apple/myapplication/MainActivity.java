@@ -1,8 +1,8 @@
 package com.example.apple.myapplication;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -12,12 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.apple.myapplication.customeview.CustomTextView;
-import com.example.apple.myapplication.customeview.LargeImageView;
 import com.example.apple.myapplication.customeview.LocationLayout;
 import com.example.apple.myapplication.customeview.MyTextView;
 import com.example.apple.myapplication.customeview.OperationView;
@@ -28,13 +29,7 @@ import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OperationView.InflateEnd{
     View view1;
     View view2;
     View view3;
@@ -50,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     CustomTextView test;
     Button enable,enable1;
     public static TextView xy;
+    private float oldX = 1,oldY = 1;
+    OperationView operationView;
+    FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,14 +99,46 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initOperateView() {
+        frameLayout = (FrameLayout) findViewById(R.id.root);
         xy = (TextView) findViewById(R.id.xy);
-        final OperationView operationView = new OperationView(this);
-        operationView.setOnClickListener(new View.OnClickListener() {
+        operationView = (OperationView) findViewById(R.id.operate);
+//        operationView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                operationView.scale();
+//            }
+//        });
+    }
+
+    private void initImageView() {
+//        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final ImageView imageView = (ImageView) findViewById(R.id.img);
+        operationView.buildDrawingCache();
+//        Bitmap tmp = operationView.getDrawingCache();
+//        int w = View.MeasureSpec.makeMeasureSpec(0,
+//                View.MeasureSpec.UNSPECIFIED);
+//        int h = View.MeasureSpec.makeMeasureSpec(0,
+//                View.MeasureSpec.UNSPECIFIED);
+//        operationView.measure(w, h);
+//        int width = operationView.getMeasuredWidth();
+//        int height = operationView.getMeasuredHeight();
+        Log.e("w-h:",new StringBuilder().append(OperationView.w).append(OperationView.h).toString());
+//        Bitmap bitmap = Bitmap.createBitmap(OperationView.w,OperationView.h, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = operationView.getDrawingCache();
+        imageView.setImageBitmap(bitmap);
+        imageView.setScaleType(ImageView.ScaleType.MATRIX);
+//        imageView.setDrawingCacheEnabled(true);
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                operationView.scale();
+                operationView.buildDrawingCache();
+                Bitmap bitmap = Bitmap.createBitmap(operationView.getDrawingCache());
+                imageView.setImageBitmap(bitmap);
+                imageView.setScaleX(oldX * 2);
+                imageView.setScaleY(oldY * 2);
             }
         });
+//        frameLayout.addView(imageView, lp);
     }
 
     private void initLocation() {
@@ -405,4 +435,8 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void inflate() {
+        initImageView();
+    }
 }
