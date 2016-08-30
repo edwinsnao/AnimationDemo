@@ -23,4 +23,11 @@
         android:layout_gravity="bottom"
         android:layout_marginBottom="20dp"
         />
+    <com.example.apple.myapplication.customeview.DragGridView
+        android:id="@+id/drag"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="bottom"
+        android:background="@color/yellow"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"></com.example.apple.myapplication.customeview.DragGridView>
 </FrameLayout>

@@ -19,6 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.apple.myapplication.customeview.CustomTextView;
+import com.example.apple.myapplication.customeview.DragAdapter;
+import com.example.apple.myapplication.customeview.DragGridView;
 import com.example.apple.myapplication.customeview.LocationLayout;
 import com.example.apple.myapplication.customeview.MyTextView;
 import com.example.apple.myapplication.customeview.OperationView;
@@ -28,6 +30,9 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OperationView.InflateEnd{
     View view1;
@@ -95,7 +100,25 @@ public class MainActivity extends AppCompatActivity implements OperationView.Inf
 //            }
 //        });
         initOperateView();
+        initDragView();
 
+    }
+
+
+    /**
+    * pointToPosition Usage(GridView and ListView)
+    * */
+    private void initDragView() {
+        DragGridView grid = (DragGridView) findViewById(R.id.drag);
+        List<String> names = new ArrayList<>();
+        names.add("Hello");
+        names.add("Hello");
+        names.add("Hello");
+        names.add("Hello");
+        names.add("Hello");
+        names.add("Hello");
+        DragAdapter adapter = new DragAdapter(this,names);
+        grid.setAdapter(adapter);
     }
 
     private void initOperateView() {
