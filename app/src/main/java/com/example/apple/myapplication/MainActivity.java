@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements OperationView.Inf
             Log.e("child", String.valueOf(location.getChildAt(i)));
         }
         MyTextView my = new MyTextView(this);
-        my.setText("MyTextView");
+        my.setText("DragImageView");
         my.setTextSize(50);
         my.setTextColor(Color.WHITE);
         test = new CustomTextView(this);
