@@ -14,7 +14,7 @@ import com.example.apple.myapplication.utils.AnimationUtils;
  */
 
 public class EventActiivty extends Activity {
-    TextView on,down;
+    TextView on,down,on1;
     LinearLayout onll,downll;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class EventActiivty extends Activity {
 
     private void initView() {
         on = (TextView) findViewById(R.id.on);
+        on1 = (TextView) findViewById(R.id.on1);
         down = (TextView) findViewById(R.id.down);
         onll = (LinearLayout) findViewById(R.id.onll);
         downll = (LinearLayout) findViewById(R.id.downll);
@@ -39,6 +40,13 @@ public class EventActiivty extends Activity {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
                 AnimationUtils.setClicked1(on);
+                return false;
+            }
+        });
+        on1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                AnimationUtils.setClicked1(on1);
                 return false;
             }
         });
