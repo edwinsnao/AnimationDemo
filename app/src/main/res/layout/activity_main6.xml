@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+<LinearLayout
+    android:id="@+id/downll"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/down"
+        android:textSize="30sp"
+        android:text="down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+<com.example.apple.myapplication.customeview.OnLayout
+    android:id="@+id/onll"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/on"
+        android:textSize="30sp"
+        android:text="up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</com.example.apple.myapplication.customeview.OnLayout>
+</FrameLayout>
