@@ -9,12 +9,26 @@
         android:scaleType="matrix"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <com.example.apple.myapplication.customeview.OperationView
+    <com.example.apple.myapplication.customeview.MyTextView
+        android:layout_width="wrap_content"
+        android:id="@+id/on"
+        android:text="on"
+        android:textSize="30sp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"/>
+    <com.example.apple.myapplication.customeview.MyTextView
+        android:layout_width="wrap_content"
+        android:id="@+id/down"
+        android:text="down"
+        android:textSize="30sp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"/>
+   <!-- <com.example.apple.myapplication.customeview.OperationView
         android:id="@+id/operate"
         android:layout_gravity="center"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        />
+        />-->
     <TextView
         android:id="@+id/xy"
         android:layout_width="wrap_content"

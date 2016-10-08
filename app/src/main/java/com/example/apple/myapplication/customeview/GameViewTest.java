@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -37,6 +38,14 @@ public class GameViewTest extends Activity {
     private  int ballY = random.nextInt(10) + 20;
     private int rackectX = random.nextInt(200);
     private boolean isLose = false;
+    private float downX = 0;
+    private float downY = 0;
+    private float MoveX = 0;
+    private float MoveY = 0;
+    private float DragX = 0;
+    private float DragY = 0;
+    private float previousY = 0;
+    private float previousX = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +69,30 @@ public class GameViewTest extends Activity {
                     gameView.invalidate();
             }
         };
+//        gameView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                switch (motionEvent.getAction()){
+//                    case MotionEvent.ACTION_DOWN:
+//                        break;
+//                    case MotionEvent.ACTION_MOVE:
+//                        MoveX = motionEvent.getX();
+//                        MoveY = motionEvent.getY();
+//                        DragX = MoveX - downX;
+//                        DragY = MoveY - downY;
+//                        gameView.layout((int) (gameView.getLeft() + DragX), (int) gameView.getTop(), (int)
+//                                (gameView.getLeft() + DragX + gameView.getWidth()), (int)
+//                                (gameView.getTop() + DragY + gameView.getHeight()));
+//                        previousX = DragX;
+//                        previousY = DragY;
+//                    case MotionEvent.ACTION_UP:
+//                        break;
+//
+//                }
+//                return false;
+//            }
+//        });
+
         gameView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
@@ -87,23 +120,22 @@ public class GameViewTest extends Activity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if(ballX <=0 || ballX >= screenW - BALL_SIZ){
+                if (ballX <= 0 || ballX >= screenW - BALL_SIZ) {
                     xSpeed = -xSpeed;
                 }
-                if(ballY >=racketY - BALL_SIZ
-                        && (ballX < rackectX || ballX > rackectX + RACKECT_WIDTH)){
+                if (ballY >= racketY - BALL_SIZ
+                        && (ballX < rackectX || ballX > rackectX + RACKECT_WIDTH)) {
                     timer.cancel();
                     isLose = true;
-                }
-                else if(ballY <= 0
-                        || ballY >= racketY -BALL_SIZ
-                        && ballX > rackectX && ballX <= rackectX +RACKECT_WIDTH)
+                } else if (ballY <= 0
+                        || ballY >= racketY - BALL_SIZ
+                        && ballX > rackectX && ballX <= rackectX + RACKECT_WIDTH)
                     ySeed = -ySeed;
-                ballX+=xSpeed;
-                ballY+=ySeed;
+                ballX += xSpeed;
+                ballY += ySeed;
                 handler.sendEmptyMessage(0x123);
             }
-        },0,100);
+        }, 0, 100);
     }
 
     class GameView extends View {
@@ -121,6 +153,30 @@ public class GameViewTest extends Activity {
         public GameView(Context context, AttributeSet attrs, int defStyleAttr) {
             super(context, attrs, defStyleAttr);
             setFocusable(true);
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent motionEvent) {
+            switch (motionEvent.getAction()){
+                case MotionEvent.ACTION_DOWN:
+                    downX = motionEvent.getX();
+                    downY = motionEvent.getY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    MoveX = motionEvent.getX();
+                    MoveY = motionEvent.getY();
+                    DragX = MoveX - downX;
+                    DragY = MoveY - downY;
+                    this.layout((int) (this.getLeft() + DragX), (int) this.getTop(), (int)
+                            (this.getLeft() + DragX + this.getWidth()), (int)
+                            (this.getTop() + DragY + this.getHeight()));
+                    previousX = DragX;
+                    previousY = DragY;
+                case MotionEvent.ACTION_UP:
+                    break;
+
+            }
+            return false;
         }
 
         @Override

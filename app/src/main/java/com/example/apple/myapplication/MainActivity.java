@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements OperationView.Inf
     private float oldX = 1,oldY = 1;
     OperationView operationView;
     FrameLayout frameLayout;
+    MyTextView on,down;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements OperationView.Inf
     private void initOperateView() {
         frameLayout = (FrameLayout) findViewById(R.id.root);
         xy = (TextView) findViewById(R.id.xy);
-        operationView = (OperationView) findViewById(R.id.operate);
+//        operationView = (OperationView) findViewById(R.id.operate);
 //        operationView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -429,6 +431,36 @@ public class MainActivity extends AppCompatActivity implements OperationView.Inf
         TextAlign text = new TextAlign(this);
 //        main.addView(circle);
         main.addView(text);
+        on = (MyTextView) findViewById(R.id.on);
+        /**
+        * false
+        * on在点击时不响应onclick事件,而down响应
+        * */
+        on.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                return false;
+            }
+        });
+        on.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AnimationUtils.setClicked1(on);
+            }
+        });
+        down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AnimationUtils.setClicked1(down);
+            }
+        });
+        down = (MyTextView) findViewById(R.id.down);
+//        down.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent event) {
+//                return false;
+//            }
+//        });
     }
 
     public void setVisibility() {
@@ -460,6 +492,6 @@ public class MainActivity extends AppCompatActivity implements OperationView.Inf
 
     @Override
     public void inflate() {
-        initImageView();
+//        initImageView();
     }
 }
