@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.apple.myapplication.customeview.MyOnTextView;
+import com.example.apple.myapplication.customeview.MyTextView;
 import com.example.apple.myapplication.utils.AnimationUtils;
 
 /**
@@ -24,9 +26,9 @@ public class EventActiivty extends Activity {
     }
 
     private void initView() {
-        on = (TextView) findViewById(R.id.on);
-        on1 = (TextView) findViewById(R.id.on1);
-        down = (TextView) findViewById(R.id.down);
+        on = (MyOnTextView) findViewById(R.id.on);
+        on1 = (MyOnTextView) findViewById(R.id.on1);
+        down = (MyTextView) findViewById(R.id.down);
         onll = (LinearLayout) findViewById(R.id.onll);
         downll = (LinearLayout) findViewById(R.id.downll);
         down.setOnTouchListener(new View.OnTouchListener() {

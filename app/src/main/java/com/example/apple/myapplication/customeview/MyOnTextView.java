@@ -1,19 +1,23 @@
 package com.example.apple.myapplication.customeview;
 
+/**
+ * Created by fazhao on 2016/10/8.
+ */
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.apple.myapplication.utils.AnimationUtils;
 
+
 /**
  * Created by Kings on 2016/7/20.
  */
-public class MyTextView extends TextView {
+public class MyOnTextView extends TextView {
     private long start;
     private int i;
     private long end;
@@ -28,17 +32,17 @@ public class MyTextView extends TextView {
     private float DragY = 0;
     private Context context;
 
-    public MyTextView(Context context) {
+    public MyOnTextView(Context context) {
         super(context);
         init(context);
     }
 
-    public MyTextView(Context context, AttributeSet attrs) {
+    public MyOnTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public MyTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MyOnTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -54,6 +58,23 @@ public class MyTextView extends TextView {
         Log.e("onclick1", "onclick");
         this.setText("click" + ++i);
     }
+
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent event) {
+//        boolean intercept = false;
+//        switch (event.getAction()){
+//            case MotionEvent.ACTION_DOWN:
+//                intercept = false;
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                intercept = true;
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                intercept = false;
+//                break;
+//        }
+//        return intercept;
+//    }
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
@@ -104,3 +125,4 @@ public class MyTextView extends TextView {
         return true;
     }
 }
+

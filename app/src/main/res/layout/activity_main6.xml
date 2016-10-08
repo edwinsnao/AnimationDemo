@@ -9,7 +9,7 @@
     android:layout_width="match_parent"
     android:gravity="center"
     android:layout_height="wrap_content">
-    <TextView
+    <com.example.apple.myapplication.customeview.MyTextView
         android:id="@+id/down"
         android:textSize="30sp"
         android:text="down"
@@ -22,7 +22,7 @@
     android:layout_width="match_parent"
     android:gravity="center"
     android:layout_height="wrap_content">
-    <TextView
+    <com.example.apple.myapplication.customeview.MyOnTextView
         android:id="@+id/on"
         android:textSize="30sp"
         android:text="up1"
@@ -36,7 +36,7 @@
     android:layout_width="match_parent"
     android:gravity="center"
     android:layout_height="wrap_content">
-    <TextView
+    <com.example.apple.myapplication.customeview.MyOnTextView
         android:id="@+id/on1"
         android:textSize="30sp"
         android:text="up"
@@ -44,4 +44,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </com.example.apple.myapplication.customeview.OnLayout>
+   <!-- <com.example.apple.myapplication.customeview.MyTextView
+        android:layout_gravity="center"
+        android:id="@+id/down"
+        android:textSize="30sp"
+        android:text="down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.example.apple.myapplication.customeview.MyOnTextView
+        android:layout_gravity="center"
+        android:id="@+id/on"
+        android:textSize="30sp"
+        android:text="up1"
+        android:textColor="@color/blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.example.apple.myapplication.customeview.MyOnTextView
+        android:id="@+id/on1"
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        android:text="up"
+        android:textColor="@color/green"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>-->
 </FrameLayout>
