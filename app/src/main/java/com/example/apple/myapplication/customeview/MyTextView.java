@@ -56,7 +56,14 @@ public class MyTextView extends TextView {
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        Log.e("MyTextdispatch",""+event.getAction());
+        return super.dispatchTouchEvent(event);
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
+        Log.e("MyTextTouchEvent",""+motionEvent.getAction());
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 downX = motionEvent.getX();
@@ -69,13 +76,14 @@ public class MyTextView extends TextView {
                 MoveY = motionEvent.getY();
                 DragX = MoveX - downX;
                 DragY = MoveY - downY;
-                Log.e("move", "move");
+//                Log.e("move", "move");
                 this.layout((int) (this.getLeft() + DragX), (int) this.getTop(), (int)
                         (this.getLeft() + DragX + this.getWidth()), (int)
                         (this.getTop() + DragY + this.getHeight()));
                 previousX = DragX;
                 previousY = DragY;
                 return true;
+//                return false;
             case MotionEvent.ACTION_UP:
                 end = System.currentTimeMillis();
                 time = end - start;

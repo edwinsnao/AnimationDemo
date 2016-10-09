@@ -30,6 +30,7 @@ public class OnLayout extends LinearLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        Log.e("OnLayoutTouch",""+event.getAction());
         switch (event.getAction()){
 //            case MotionEvent.ACTION_DOWN:
 //                return false;
@@ -59,6 +60,7 @@ public class OnLayout extends LinearLayout {
                 Log.e("onintercept","onup");
                 break;
         }
+        Log.e("OnLayoutIntercept",""+ev.getAction());
         Log.e("intercept:",i++ +" "+intercept);
         return intercept;
     }
@@ -67,6 +69,7 @@ public class OnLayout extends LinearLayout {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         boolean isMove = false;
+        Log.e("OnLayoutdispatch",""+ev.getAction());
 //        if(this.onInterceptTouchEvent(ev)){
 //            return super.dispatchTouchEvent(ev);
 ////            return true;
@@ -84,21 +87,21 @@ public class OnLayout extends LinearLayout {
 //            return super.dispatchTouchEvent(ev);
 //        }else
 //        return  false;
-        Log.e("dispatch:",ev.getAction()+"");
-        switch (ev.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                isMove = false;
-                break;
-//                return false;
-            case MotionEvent.ACTION_MOVE:
-                Log.e("dispatch:","true");
-                isMove = true;
-                super.dispatchTouchEvent(ev);
-                return true;
-        }
-        return super.dispatchTouchEvent(ev);
+//        Log.e("dispatch:",ev.getAction()+"");
+//        switch (ev.getAction()){
+//            case MotionEvent.ACTION_DOWN:
+//                isMove = false;
+//                break;
+////                return false;
+//            case MotionEvent.ACTION_MOVE:
+//                Log.e("dispatch:","true");
+//                isMove = true;
+//                super.dispatchTouchEvent(ev);
+//                return true;
+//        }
+//        return super.dispatchTouchEvent(ev);
 //        Log.e("dispatch:","false");
-//        return false;
+        return false;
 //        return false;
     }
 }

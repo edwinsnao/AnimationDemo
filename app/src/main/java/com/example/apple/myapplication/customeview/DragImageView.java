@@ -66,7 +66,7 @@ public class DragImageView extends ImageView {
                 MoveY = motionEvent.getY();
                 DragX = MoveX - downX;
                 DragY = MoveY - downY;
-                Log.e("move", "move");
+//                Log.e("move", "move");
                 this.layout((int) (this.getLeft() + DragX), (int) this.getTop(), (int)
                         (this.getLeft() + DragX + this.getWidth()), (int)
                         (this.getTop() + DragY + this.getHeight()));

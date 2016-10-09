@@ -59,25 +59,34 @@ public class MyOnTextView extends TextView {
         this.setText("click" + ++i);
     }
 
-//    @Override
-//    public boolean dispatchTouchEvent(MotionEvent event) {
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        Log.e("OnTextdispatch",""+event.getAction());
 //        boolean intercept = false;
 //        switch (event.getAction()){
 //            case MotionEvent.ACTION_DOWN:
 //                intercept = false;
 //                break;
 //            case MotionEvent.ACTION_MOVE:
-//                intercept = true;
-//                break;
+//                /**
+//                * 这样相当于拦截了不处理onTouchEvent的
+//                * */
+////                intercept = true;
+////                break;
+//                return super.dispatchTouchEvent(event);
 //            case MotionEvent.ACTION_UP:
 //                intercept = false;
 //                break;
 //        }
 //        return intercept;
-//    }
+        return super.dispatchTouchEvent(event);
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
+        downX = this.getX();
+        downY = this.getY();
+        Log.e("OnTextTouchEvent",""+motionEvent.getAction());
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 downX = motionEvent.getX();
@@ -90,7 +99,7 @@ public class MyOnTextView extends TextView {
                 MoveY = motionEvent.getY();
                 DragX = MoveX - downX;
                 DragY = MoveY - downY;
-                Log.e("move", "move");
+//                Log.e("move", "move");
                 this.layout((int) (this.getLeft() + DragX), (int) this.getTop(), (int)
                         (this.getLeft() + DragX + this.getWidth()), (int)
                         (this.getTop() + DragY + this.getHeight()));
@@ -117,6 +126,7 @@ public class MyOnTextView extends TextView {
                         this.setText("long");
                     }
                 }
+//                this.setText("up");
 
                 Log.e("up", "up");
                 break;
