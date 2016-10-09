@@ -37,12 +37,19 @@ public class EventActiivty extends Activity {
         return super.onTouchEvent(event);
     }
 
+
+    /**
+    * 移动的拦截
+    * */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         Log.e("Activitydispatch",""+ev.getAction());
         switch (ev.getAction()){
             case MotionEvent.ACTION_MOVE:
 //                on1.dispatchTouchEvent(ev);
+                /**
+                * 与 return on1.dispatchTouchEvent(ev);一样
+                * */
 //                on1.onTouchEvent(ev);
 //                return super.dispatchTouchEvent(ev);
 //                return true;

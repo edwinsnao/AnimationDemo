@@ -68,9 +68,9 @@ public class MyOnTextView extends TextView {
 //                intercept = false;
 //                break;
 //            case MotionEvent.ACTION_MOVE:
-//                /**
-//                * 这样相当于拦截了不处理onTouchEvent的
-//                * */
+                /**
+                * 这样相当于拦截了不处理onTouchEvent的
+                * */
 ////                intercept = true;
 ////                break;
 //                return super.dispatchTouchEvent(event);
@@ -84,6 +84,22 @@ public class MyOnTextView extends TextView {
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
+        /**
+         * 修复奇怪的bug:拖动up就会飞走
+         * 解决过程:
+         * 我是打Log发现
+         * Log.e("move", String.valueOf(Math.abs(MoveX - downX)));
+         Log.e("move1", String.valueOf(DragX));
+         move非常大
+         move1为0(因为downXy为0)
+
+        * 是用于我的事件拦截的,因为在拦截到了MOVE事件后
+         * EventActivtiy就会执行dispatchTouchEvent
+         * 并return on1.dispatchTouchEvent(ev);
+         * 而由于这时是拦截到MOVE,所以传入的参数ev也是MOVE事件
+         * 所以直接进入MYONTEXT的touchEvent的case MOVE,所以没有了case DOWN的对downX和Y的初始化
+         * 所以我就对它暂且初始化为view的xy坐标就不会飞走了
+        * */
         downX = this.getX();
         downY = this.getY();
         Log.e("OnTextTouchEvent",""+motionEvent.getAction());
